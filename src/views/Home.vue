@@ -1,23 +1,24 @@
 <template>
   <div class="home" style="margin-top:40px;" id="nav">
     <div class="container">
-    <div class="row row-cols-1 row-cols-md-4">
-      <div v-for="(pokemon, i) in pokemons" :key="i" class="col mb-4">
-        <Pokemon :pokemon="pokemon" :show-open-button="true"/>
+      <div class="row row-cols-1 row-cols-md-4">
+        <div v-for="(pokemon, i) in pokemons" :key="i" class="col mb-4">
+          <Pokemon :pokemon="pokemon" :show-open-button="true" />
+        </div>
       </div>
-    </div>
 
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li v-if="prev" class="page-item">
-          <button v-on:click="prevPage()" class="page-link" href="#" tabindex="-1">Previous</button>
-        </li>
-        <li class="page-item">
-          <button v-on:click="nextPage()" class="page-link">Next</button>
-        </li>
-      </ul>
-    </nav>
-  </div></div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li v-if="prev" class="page-item">
+            <button v-on:click="prevPage()" class="page-link" href="#" tabindex="-1">Previous</button>
+          </li>
+          <li class="page-item">
+            <button v-on:click="nextPage()" class="page-link">Next</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -33,15 +34,16 @@ export default {
     return {
       total: null,
       pokemons: [],
-      next: '',
+      next: "",
       prev: Boolean,
-      current: 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20'
+      current: "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20"
     };
   },
 
   methods: {
-    async getPokemons () {
-      await axios.get(this.current)
+    async getPokemons() {
+      await axios
+        .get(this.current)
         .then(res => {
           this.pokemons = res.data.results;
           this.next = res.data.next;
@@ -52,19 +54,19 @@ export default {
           console.log(res);
         });
     },
-    nextPage () {
+    nextPage() {
       this.current = this.next;
       this.getPokemons();
     },
-    prevPage () {
+    prevPage() {
       this.current = this.prev;
       this.getPokemons();
     }
   },
-  created () {
+  created() {
     this.getPokemons();
   }
-}
+};
 </script>
 
 <style>
